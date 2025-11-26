@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator Sederhana</title>
+</head>
+<body>
+
+  <div class="calc">
+    <h2>Kalkulator Sederhana</h2>
+    <input type="number" id="angka1" placeholder="Angka 1">
+    <input type="number" id="angka2" placeholder="Angka 2">
+    <br>
+    <button onclick="hitung('+')">Jumlah (+)</button>
+    <button onclick="hitung('-')">Kurang (-)</button>
+    <button onclick="hitung('*')">Kali (×)</button>
+    <button onclick="hitung('/')">Bagi (÷)</button>
+    <h3>Hasil: <span id="hasil">0</span></h3>
+  </div>
+
+  <script>
+    function hitung(operasi) {
+      let a = parseFloat(document.getElementById("angka1").value);
+      let b = parseFloat(document.getElementById("angka2").value);
+      let hasil = 0;
+
+      if (isNaN(a) || isNaN(b)) {
+        alert("Masukkan kedua angka terlebih dahulu!");
+        return;
+      }
+
+      switch (operasi) {
+        case '+': hasil = a + b; break;
+        case '-': hasil = a - b; break;
+        case '*': hasil = a * b; break;
+        case '/': hasil = b !== 0 ? a / b : "Tidak bisa dibagi 0"; break;
+      }
+
+      document.getElementById("hasil").innerText = hasil;
+    }
+  </script>
+
+</body>
+</html>

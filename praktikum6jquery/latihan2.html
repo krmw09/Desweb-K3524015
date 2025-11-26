@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan 2 - Jam Digital START/STOP</title>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin-top: 50px; 
+        }
+        #tampilanJam { 
+            font-size: 3rem; 
+            margin: 20px; 
+            font-family: 'Times New Roman', Times, serif;
+        }
+        #tampilanTanggal {
+            font-size: 3rem;
+            margin: 20px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        #tombolStartStop { 
+            font-size: 1.2rem; 
+            padding: 10px 20px; 
+        }
+    </style>
+</head>
+<body>
+
+    <div id="tampilanTanggal">Hari, 00 Bulan 0000</div>
+    <div id="tampilanJam">00:00:00</div>
+    <button id="tombolStartStop">START</button>
+
+    <script type="text/javascript">
+    
+        $(document).ready(function(){
+            
+            var jamInterval; 
+            var tanggalInterval;
+            const namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+            const namaBulan = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            var sedangBerjalan = false;
+
+            function padZero(angka) {
+                return (angka < 10) ? "0" + angka : angka;
+            }
+            
+            function updateJam() {
+                var d = new Date();
+                var jam = padZero(d.getHours());
+                var menit = padZero(d.getMinutes());
+                var detik = padZero(d.getSeconds());
+                
+                $("#tampilanJam").html(jam + ":" + menit + ":" + detik);
+            }
+
+            function updateTanggal() {
+                var d = new Date();
+                var hari = d.getDay();
+                var tanggal = d.getDate();
+                var bulan = d.getMonth();
+                var tahun = d.getFullYear();
+                var tanggalLengkap = namaHari[hari] + ", " + tanggal + " " + namaBulan[bulan] + " " + tahun;
+
+                $("#tampilanTanggal").html(tanggalLengkap);
+            }
+
+            $("#tombolStartStop").click(function(){
+                
+                if (sedangBerjalan) {
+                    clearInterval(jamInterval); 
+                    clearInterval(tanggalInterval);
+                    $(this).text("START");
+                    sedangBerjalan = false;
+                } else {
+                    updateJam(); 
+                    
+                    jamInterval = setInterval(updateJam, 1000); 
+                    tanggalInterval = setInterval(updateTanggal, 1000);
+                    $(this).text("STOP");
+                    sedangBerjalan = true;
+                }
+            });
+
+        });
+    </script>
+
+</body>
+</html>
